@@ -21,8 +21,7 @@ public class StudentController {
     public ResponseEntity<Student> getStudentInfo(@PathVariable Long id) {
         Student student = service.getStudent(id);
         if (student == null) {
-            return
-                    ResponseEntity.notFound().build();
+            return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(student);
     }
@@ -53,8 +52,8 @@ public class StudentController {
         return ResponseEntity.ok(service.getAllStudents());
     }
 
-    @GetMapping("{age}")
-    public ResponseEntity<Collection<Student>> getByAgeStudent(@PathVariable Long age) {
+    @GetMapping("age")
+    public ResponseEntity<Collection<Student>> getByAgeStudent(@RequestParam(required = false) Long age) {
         if (age > 0) {
             return ResponseEntity.ok(service.findByAge(age));
         }
