@@ -10,20 +10,20 @@ public class Faculty {
     //ие поля: Long id, String name, String color.
     @Id
     @GeneratedValue
-    private Long id;
+    private long id;
     private String name;
     private String color;
     public Faculty(){//default constructor
 
     }
 
-    public Faculty(Long id, String name, String color) {
+    public Faculty(long id, String name, String color) {
         this.id = id;
         this.name = name;
         this.color = color;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 

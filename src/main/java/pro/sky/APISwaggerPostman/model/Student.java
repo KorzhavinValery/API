@@ -11,7 +11,7 @@ import java.util.Objects;
 public class Student {
     @Id
     @GeneratedValue
-    private Long id;
+    private long id;
     private String name;
     private int age;
 
@@ -21,13 +21,13 @@ public class Student {
 
     }
 
-    public Student(Long id, String name, int age) {
+    public Student(long id, String name, int age) {
         this.id = id;
         this.name = name;
         this.age = age;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
