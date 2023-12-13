@@ -1,59 +1,54 @@
 package pro.sky.APISwaggerPostman.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pro.sky.APISwaggerPostman.model.Faculty;
+import pro.sky.APISwaggerPostman.repository.FacultyRepository;
 import pro.sky.APISwaggerPostman.service.FacultyService;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 
 @Service
 public class FacultyServiceImpl implements FacultyService {
-    private final HashMap<Long, Faculty> faculties = new HashMap<>();
-    private long count = 0;
+    @Autowired
+   private final FacultyRepository facultyRepository;
+
+    public FacultyServiceImpl(FacultyRepository facultyRepository) {
+        this.facultyRepository = facultyRepository;
+    }
+
 
     @Override
     public Faculty createFaculty(Faculty faculty) {
-        faculty.setId(++count);
-        faculties.put(count, faculty);
-        return faculty;
+
+        return facultyRepository.save(faculty);
     }
 
     @Override
     public Faculty getFaculty(long id) {
-        return faculties.get(id);
+        return facultyRepository.findById(id).get();
     }
 
     @Override
     public Faculty editFaculty(Faculty faculty) {
-        if (!faculties.containsKey(faculty.getId())) {
-            return null;
-        }
-        faculties.put(faculty.getId(), faculty);
-        return faculty;
+        return facultyRepository.save(faculty);
     }
 
     @Override
-    public Faculty deleteFaculty(long id) {
-        return faculties.remove(id);
+    public void deleteFaculty(long id) {
+        facultyRepository.deleteById(id);
     }
 
     @Override
     public Collection<Faculty> getAllFaculties() {
-        return faculties.values();
+        return facultyRepository.findAll();
     }
 
-    @Override
-    public Collection<Faculty> findByColor(String color) {
-        ArrayList<Faculty> result = new ArrayList<>();
-        for (Faculty faculty : faculties.values()) {
-            if (Objects.equals(faculty.getColor(), color)) {
-                result.add(faculty);
-            }
 
-        }
-        return result;
+    public List<Faculty> findByName(String color){
+        return facultyRepository.findByName(color);
     }
 }
