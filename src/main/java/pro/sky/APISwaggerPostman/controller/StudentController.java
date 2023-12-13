@@ -3,7 +3,7 @@ package pro.sky.APISwaggerPostman.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pro.sky.APISwaggerPostman.model.Student;
-import pro.sky.APISwaggerPostman.service.StudentService;
+import pro.sky.APISwaggerPostman.service.impl.StudentServiceImpl;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -11,9 +11,9 @@ import java.util.Collections;
 @RestController
 @RequestMapping("student")
 public class StudentController {
-    private final StudentService service;
+    private final StudentServiceImpl service;
 
-    public StudentController(StudentService service) {
+    public StudentController(StudentServiceImpl service) {
         this.service = service;
     }
 
