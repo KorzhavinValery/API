@@ -48,7 +48,7 @@ public class FacultyServiceImpl implements FacultyService {
     }
 
 
-    public List<Faculty> findByName(String color){
-        return facultyRepository.findByName(color);
+    public Collection<Faculty> findAllByColor(String color){
+        return facultyRepository.findAllByColor(color);
     }
 }

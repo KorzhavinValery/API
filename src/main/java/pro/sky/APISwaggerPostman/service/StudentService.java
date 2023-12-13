@@ -13,5 +13,6 @@ public interface StudentService {
     void removeStudent(long id);
 
     Collection<Student> getAllStudents();
+    Collection<Student> findAllByAge(int age);
 
 }

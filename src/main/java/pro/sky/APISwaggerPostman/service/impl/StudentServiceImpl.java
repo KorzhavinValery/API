@@ -48,7 +48,8 @@ public class StudentServiceImpl implements StudentService {
         return studentRepository.findAll();
     }
 
-    public List<Student> findByName(Long age){
-        return studentRepository.findByName(age);
+    @Override
+    public Collection<Student> findAllByAge(int age) {
+        return studentRepository.findAllByAge(age);
     }
 }

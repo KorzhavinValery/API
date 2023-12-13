@@ -5,7 +5,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 import java.util.Objects;
+
 @Entity
+
 public class Student {
     @Id
     @GeneratedValue
@@ -14,6 +16,10 @@ public class Student {
     private int age;
 
 //    Long id, String name, int age.
+
+    public Student() { //default constructor
+
+    }
 
     public Student(Long id, String name, int age) {
         this.id = id;

@@ -7,6 +7,7 @@ import pro.sky.APISwaggerPostman.service.impl.StudentServiceImpl;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @RestController
 @RequestMapping("student")
@@ -53,9 +54,9 @@ public class StudentController {
     }
 
     @GetMapping("age")
-    public ResponseEntity<Collection<Student>> getByAgeStudent(@RequestParam(required = false) Long age) {
+    public ResponseEntity<Collection<Student>> getByAgeStudent(@RequestParam(required = false) int age) {
         if (age > 0) {
-            return ResponseEntity.ok(service.findByName(age));
+            return ResponseEntity.ok(service.findAllByAge(age));
         }
         return ResponseEntity.ok(Collections.emptyList());
     }

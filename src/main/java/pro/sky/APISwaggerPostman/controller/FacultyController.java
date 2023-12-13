@@ -7,6 +7,7 @@ import pro.sky.APISwaggerPostman.service.impl.FacultyServiceImpl;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @RestController
 @RequestMapping("faculty")
@@ -54,7 +55,7 @@ public class FacultyController {
     @GetMapping ("color")
     public ResponseEntity<Collection<Faculty>> findByColorFaculty(@RequestParam(required = false)  String color) {
         if (color != null && !color.isBlank()) {
-            return ResponseEntity.ok(service.findByName(color));
+            return ResponseEntity.ok(service.findAllByColor(color));
         }
         return ResponseEntity.ok(Collections.emptyList());
     }
