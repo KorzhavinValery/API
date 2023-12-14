@@ -68,7 +68,7 @@ public class FacultyServiceImplTest {
                 new Faculty(3, "pyfindyi", "yellow"));
         String color = "yellow";
 
-        Mockito.when(facultyRepository.findAllByColor(color))
+        Mockito.when(facultyRepository.findByNameContainsIgnoreCase(color))
                 .thenReturn(faculties);
 
         List<Faculty> facultyList = faculties.stream().filter(fc -> fc.getColor().equals(color))

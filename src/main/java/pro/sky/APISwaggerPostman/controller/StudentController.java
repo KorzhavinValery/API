@@ -2,6 +2,7 @@ package pro.sky.APISwaggerPostman.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pro.sky.APISwaggerPostman.model.Faculty;
 import pro.sky.APISwaggerPostman.model.Student;
 import pro.sky.APISwaggerPostman.service.impl.StudentServiceImpl;
 
@@ -53,12 +54,41 @@ public class StudentController {
         return ResponseEntity.ok(service.getAllStudents());
     }
 
+    @GetMapping("facultyId")
+    public ResponseEntity<Collection<Student>> getAllStudentsByFacultyId(@RequestParam(required = false) long facultyId) {
+        if (facultyId > 0) {
+            return ResponseEntity.ok(service.findAllByFaculty_id(facultyId));
+        }
+
+        return ResponseEntity.ok(Collections.emptyList());
+    }
+
     @GetMapping("age")
     public ResponseEntity<Collection<Student>> getByAgeStudent(@RequestParam(required = false) int age) {
         if (age > 0) {
             return ResponseEntity.ok(service.findAllByAge(age));
         }
         return ResponseEntity.ok(Collections.emptyList());
+    }
+
+    @GetMapping("age/between")
+    public ResponseEntity<Collection<Student>> getByAgeBetweenStudent(@RequestParam(required = false) int min,
+                                                                      @RequestParam(required = false) int max) {
+        if (min > 0 && max < Integer.MAX_VALUE) {
+            return ResponseEntity.ok(service.findByAgeBetween(min, max));
+        }
+        return ResponseEntity.ok(Collections.emptyList());
+    }
+
+    @GetMapping("/getFacultyByStudentId")
+    public ResponseEntity<Faculty> getFacultyByIdStudent(@RequestParam long studentId) {
+        Faculty faculty = service.getFacultyByStudentId(studentId);
+        if (faculty == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(faculty);
+
+
     }
 
 }

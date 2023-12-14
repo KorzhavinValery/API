@@ -3,6 +3,7 @@ package pro.sky.APISwaggerPostman.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pro.sky.APISwaggerPostman.model.Faculty;
 import pro.sky.APISwaggerPostman.model.Student;
 import pro.sky.APISwaggerPostman.repository.StudentRepository;
 import pro.sky.APISwaggerPostman.service.StudentService;
@@ -51,5 +52,20 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Collection<Student> findAllByAge(int age) {
         return studentRepository.findAllByAge(age);
+    }
+
+    @Override
+    public Collection<Student> findByAgeBetween(int min, int max) {
+        return studentRepository.findByAgeBetween(min, max);
+    }
+
+    @Override
+    public Collection<Student> findAllByFaculty_id(long facultyId) {
+        return studentRepository.findAllByFaculty_id(facultyId);
+    }
+
+    @Override
+    public Faculty getFacultyByStudentId(long studentId) {
+        return getStudent(studentId).getFaculty();
     }
 }

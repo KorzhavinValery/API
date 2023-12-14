@@ -1,9 +1,12 @@
 package pro.sky.APISwaggerPostman.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
+import java.util.Collection;
 import java.util.Objects;
 @Entity
 public class Faculty {
@@ -13,6 +16,10 @@ public class Faculty {
     private long id;
     private String name;
     private String color;
+
+    @OneToMany(mappedBy = "faculty")
+    @JsonIgnore
+    private Collection<Student> students;
     public Faculty(){//default constructor
 
     }
