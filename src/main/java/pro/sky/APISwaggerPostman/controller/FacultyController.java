@@ -7,6 +7,7 @@ import pro.sky.APISwaggerPostman.service.impl.FacultyServiceImpl;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @RestController
 @RequestMapping("faculty")
@@ -18,7 +19,7 @@ public class FacultyController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Faculty> getFacultyInfo(@PathVariable Long id) {
+    public ResponseEntity<Faculty> getFacultyInfo(@PathVariable long id) {
         Faculty faculty = service.getFaculty(id);
         if (faculty == null) {
             return ResponseEntity.notFound().build();
@@ -41,7 +42,7 @@ public class FacultyController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> removeFacultyInfo(@PathVariable Long id) {
+    public ResponseEntity<Void> removeFacultyInfo(@PathVariable long id) {
         service.deleteFaculty(id);
         return ResponseEntity.ok().build();
     }
@@ -54,7 +55,7 @@ public class FacultyController {
     @GetMapping ("color")
     public ResponseEntity<Collection<Faculty>> findByColorFaculty(@RequestParam(required = false)  String color) {
         if (color != null && !color.isBlank()) {
-            return ResponseEntity.ok(service.findByColor(color));
+            return ResponseEntity.ok(service.findAllByColor(color));
         }
         return ResponseEntity.ok(Collections.emptyList());
     }

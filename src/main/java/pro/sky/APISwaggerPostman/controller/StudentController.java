@@ -7,6 +7,7 @@ import pro.sky.APISwaggerPostman.service.impl.StudentServiceImpl;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @RestController
 @RequestMapping("student")
@@ -18,7 +19,7 @@ public class StudentController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Student> getStudentInfo(@PathVariable Long id) {
+    public ResponseEntity<Student> getStudentInfo(@PathVariable long id) {
         Student student = service.getStudent(id);
         if (student == null) {
             return ResponseEntity.notFound().build();
@@ -42,7 +43,7 @@ public class StudentController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> removeStudentInfo(@PathVariable Long id) {
+    public ResponseEntity<Void> removeStudentInfo(@PathVariable long id) {
         service.removeStudent(id);
         return ResponseEntity.ok().build();
     }
@@ -53,9 +54,9 @@ public class StudentController {
     }
 
     @GetMapping("age")
-    public ResponseEntity<Collection<Student>> getByAgeStudent(@RequestParam(required = false) Long age) {
+    public ResponseEntity<Collection<Student>> getByAgeStudent(@RequestParam(required = false) int age) {
         if (age > 0) {
-            return ResponseEntity.ok(service.findByAge(age));
+            return ResponseEntity.ok(service.findAllByAge(age));
         }
         return ResponseEntity.ok(Collections.emptyList());
     }

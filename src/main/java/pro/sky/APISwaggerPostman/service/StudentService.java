@@ -10,8 +10,9 @@ public interface StudentService {
     Student createStudent(Student student);
    Student getStudent(long id);
     Student editStudent(Student student);
-    Student removeStudent(long id);
+    void removeStudent(long id);
 
     Collection<Student> getAllStudents();
-    Collection<Student> findByAge(long age);
+    Collection<Student> findAllByAge(int age);
+
 }
