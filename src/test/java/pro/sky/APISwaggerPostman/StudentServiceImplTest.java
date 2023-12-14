@@ -7,6 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import pro.sky.APISwaggerPostman.model.Faculty;
 import pro.sky.APISwaggerPostman.model.Student;
 import pro.sky.APISwaggerPostman.repository.StudentRepository;
 import pro.sky.APISwaggerPostman.service.impl.StudentServiceImpl;
@@ -27,6 +28,11 @@ public class StudentServiceImplTest {
     private StudentServiceImpl studentService;
 
     private Student student = new Student(1, "Garik", 17);
+    private List<Student> students = List.of((student),
+            new Student(2, "Ron", 18),
+            new Student(3, "StaryiStudent", 50));
+    private Faculty faculty = new Faculty(1, "puffendyi", "black");
+
 
     @Test
     public void shouldCreateStudent() {
@@ -79,4 +85,51 @@ public class StudentServiceImplTest {
 
         Assertions.assertEquals(studentList, result);
     }
+
+    @Test
+    void shouldFindByAgeBetween() {
+        int min = students.get(1).getAge();
+        int max = students.get(2).getAge();
+
+        List<Student> expected = students.stream().filter(st -> st.getAge() > min && st.getAge() < max)
+                .toList();
+
+        Mockito.when(studentRepository.findByAgeBetween(min, max)).thenReturn(expected);
+
+        Collection<Student> result = studentService.findByAgeBetween(min, max);
+
+        Assertions.assertEquals(expected, result);
+
+    }
+
+    @Test
+    void shouldGetStudentsByFacultyId() {
+        students.get(0).setFaculty(faculty);
+        students.get(1).setFaculty(faculty);
+
+        long facultyId = faculty.getId();
+
+        List<Student> expected = students.stream().filter(st -> st.getFaculty() == faculty)
+                .toList();
+
+        Mockito.when(studentRepository.findAllByFaculty_id(facultyId)).thenReturn(expected);
+
+        List<Student> result = (List<Student>) studentService.findAllByFaculty_id(facultyId);
+
+        Assertions.assertEquals(expected, result);
+    }
+
+    @Test
+    void shouldGetFacultyByStudentId() {
+
+        student.setFaculty(faculty);
+        Faculty expected = student.getFaculty();
+
+        Mockito.when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
+
+        Faculty result = studentService.getFacultyByStudentId(student.getId());
+
+        Assertions.assertEquals(expected, result);
+    }
 }
+

@@ -64,11 +64,11 @@ public class FacultyServiceImplTest {
     @Test
     void shouldFindByColor() {
         List<Faculty> faculties = List.of((faculty),
-                new Faculty(2, "kogtevran", "white"),
-                new Faculty(3, "pyfindyi", "yellow"));
+                new Faculty(2, "kogtevran", "White"),
+                new Faculty(3, "pyfindyi", "Yellow"));
         String color = "yellow";
 
-        Mockito.when(facultyRepository.findByNameContainsIgnoreCase(color))
+        Mockito.when(facultyRepository.findAllByColorIgnoreCase(color))
                 .thenReturn(faculties);
 
         List<Faculty> facultyList = faculties.stream().filter(fc -> fc.getColor().equals(color))
@@ -79,6 +79,18 @@ public class FacultyServiceImplTest {
 
         Assertions.assertEquals(facultyList, result);
 
+    }
+
+    @Test
+    void shouldFindByName() {
+        List<Faculty> faculties = List.of((faculty),
+                new Faculty(2, "kogtevran", "white"),
+                new Faculty(3, "pyfindyi", "yellow"));
+        String name = "kog";
+        Mockito.when(facultyRepository.findByNameContainsIgnoreCase(name)).thenReturn(faculties);
+        List<Faculty> facultyList = faculties.stream().filter(fc -> fc.getName().equals(name)).toList();
+        Collection<Faculty> result = facultyService.findByNameContainsIgnoreCase(name).stream().filter(fc -> fc.getName().equals(name)).toList();
+        Assertions.assertEquals(facultyList, result);
     }
 
 }
