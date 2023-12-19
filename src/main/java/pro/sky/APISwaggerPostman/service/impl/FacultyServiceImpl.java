@@ -14,7 +14,7 @@ import java.util.Objects;
 @Service
 public class FacultyServiceImpl implements FacultyService {
     @Autowired
-   private final FacultyRepository facultyRepository;
+    private final FacultyRepository facultyRepository;
 
     public FacultyServiceImpl(FacultyRepository facultyRepository) {
         this.facultyRepository = facultyRepository;
@@ -47,8 +47,13 @@ public class FacultyServiceImpl implements FacultyService {
         return facultyRepository.findAll();
     }
 
+    @Override
+    public Collection<Faculty> findAllByColor(String color) {
+        return facultyRepository.findAllByColorIgnoreCase(color);
+    }
 
-    public Collection<Faculty> findAllByColor(String color){
-        return facultyRepository.findAllByColor(color);
+    @Override
+    public Collection<Faculty> findByNameContainsIgnoreCase(String name) {
+        return facultyRepository.findByNameContainsIgnoreCase(name);
     }
 }

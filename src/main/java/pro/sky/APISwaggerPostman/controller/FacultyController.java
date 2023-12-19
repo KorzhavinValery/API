@@ -48,7 +48,10 @@ public class FacultyController {
     }
 
     @GetMapping
-    public ResponseEntity<Collection<Faculty>> getAllFaculties() {
+    public ResponseEntity<Collection<Faculty>> getAllFaculties(@RequestParam (required = false) String name) {
+        if (name != null && !name.isBlank()) {
+            return ResponseEntity.ok(service.findByNameContainsIgnoreCase(name));
+        }
         return ResponseEntity.ok(service.getAllFaculties());
     }
 
