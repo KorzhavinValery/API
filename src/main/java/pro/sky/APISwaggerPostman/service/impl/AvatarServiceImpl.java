@@ -13,6 +13,7 @@ import pro.sky.APISwaggerPostman.service.StudentService;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Objects;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
@@ -20,19 +21,21 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 @Transactional
 public class AvatarServiceImpl implements AvatarService {
     @Value("${path.to.avatars.folder}")
-    private String avatarsDir;
+    private final String avatarsDir;
     private final StudentService studentService;
     private final AvatarRepository avatarRepository;
 
-    public AvatarServiceImpl(StudentService studentService, AvatarRepository avatarRepository) {
+    public AvatarServiceImpl(String avatarsDir, StudentService studentService, AvatarRepository avatarRepository) {
         this.studentService = studentService;
         this.avatarRepository = avatarRepository;
+        this.avatarsDir = avatarsDir;
     }
 
     @Override
     public void uploadAvatar(Long studentId, MultipartFile avatarFile) throws IOException {
         Student student = studentService.getStudent(studentId);
-        Path filePath = Path.of(avatarsDir, studentId + "." + getExtensions(avatarFile.getOriginalFilename()));
+        Path filePath = Path.of(avatarsDir,
+                studentId + "." + getExtensions((avatarFile.getOriginalFilename())));
         Files.createDirectories(filePath.getParent());
         Files.deleteIfExists(filePath);
 
