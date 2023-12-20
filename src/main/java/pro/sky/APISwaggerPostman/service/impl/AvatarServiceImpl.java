@@ -47,6 +47,7 @@ public class AvatarServiceImpl implements AvatarService {
         avatar.setStudent(student);
         avatar.setFilePath(filePath.toString());
         avatar.setFileSize(avatarFile.getSize());
+        avatar.setData(avatarFile.getBytes());
         avatar.setMediaType(avatarFile.getContentType());
 
         avatarRepository.save(avatar);
