@@ -13,7 +13,7 @@ import pro.sky.APISwaggerPostman.service.StudentService;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Objects;
+
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
@@ -25,7 +25,7 @@ public class AvatarServiceImpl implements AvatarService {
     private final StudentService studentService;
     private final AvatarRepository avatarRepository;
 
-    public AvatarServiceImpl(String avatarsDir, StudentService studentService, AvatarRepository avatarRepository) {
+    public AvatarServiceImpl(@Value("${path.to.avatars.folder}")String avatarsDir, StudentService studentService, AvatarRepository avatarRepository) {
         this.studentService = studentService;
         this.avatarRepository = avatarRepository;
         this.avatarsDir = avatarsDir;
