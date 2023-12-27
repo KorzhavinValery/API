@@ -1,5 +1,7 @@
 package pro.sky.APISwaggerPostman.controller;
 
+import org.apache.el.stream.Optional;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +20,10 @@ import pro.sky.APISwaggerPostman.repository.StudentRepository;
 
 import java.util.List;
 
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class StudentControllerRestTemplateTest {
@@ -77,9 +82,20 @@ public class StudentControllerRestTemplateTest {
         assertEquals(getStudent, result.getBody());
     }
 
-//    @Test
-//    public void shouldDeleteStudent() {
-//    }
+    @Test
+    public void shouldDeleteStudent() {
+        Student getStudent = studentRepository.save(student);
+
+        ResponseEntity<Student> result = testRestTemplate.exchange(
+                baseUrl + "/1",
+                HttpMethod.DELETE,
+                HttpEntity.EMPTY,
+                Student.class
+        );
+
+                assertThat(studentRepository.findById(1L)).isEmpty();
+
+    }
 
     @Test
     public void shouldFindByAgeStudent() {
@@ -147,9 +163,9 @@ public class StudentControllerRestTemplateTest {
     @Test
    public void shouldFindAllStudentsInFacultyById() {
         Faculty getFaculty =facultyRepository.save(faculty);
-        Student student1 = new Student(2L, "Nika", 20);
-        Student student2 = new Student(3L, "Kira", 17);
-        Student student3 = new Student(4L, "Arina", 18);
+        Student student1 = new Student(2L, "Newbee", 20);
+        Student student2 = new Student(3L, "Newbee1", 17);
+        Student student3 = new Student(4L, "Newbee2", 18);
 
 
         student2.setFaculty(faculty);
