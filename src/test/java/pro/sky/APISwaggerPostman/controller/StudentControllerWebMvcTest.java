@@ -108,8 +108,8 @@ public class StudentControllerWebMvcTest {
     @Test
     public void shouldFindStudentsBetweenAge() throws Exception {
         Student studentNew = new Student(2L, "Jeremy Clarkson", 35);
-        Student studentNew1 = new Student(2L, "Hamond", 37);
-        Student studentNew2 = new Student(2L, "Cptn Jelly", 36);
+        Student studentNew1 = new Student(3L, "Hamond", 37);
+        Student studentNew2 = new Student(4L, "Cptn Jelly", 36);
         int min = student.getAge();
         int max = studentNew1.getAge();
         when(studentRepository.findByAgeBetween(min, max)).thenReturn(List.of(studentNew, studentNew2));
@@ -127,6 +127,25 @@ public class StudentControllerWebMvcTest {
         mockMvc.perform(get("/student/getFacultyByStudentId?studentId=" + student.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(student.getId()));
+    }
+    @Test
+    void shouldGetStudentsByFacultyId() throws Exception {
+        Student student1 = new Student(1L, "Aptyp", 50);
+
+        student.setFaculty(faculty);
+        student1.setFaculty(faculty);
+
+
+        List<Student> students = List.of(student, student1);
+
+        when(studentRepository.findAllByFaculty_id(faculty.getId()))
+                .thenReturn(students);
+
+        mockMvc.perform(get("/student/facultyId?facultyId="+faculty.getId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.[0].id").value(faculty.getId()))
+                .andExpect(jsonPath("$.[1].id").value(faculty.getId()));
+
     }
 }
 
