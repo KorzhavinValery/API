@@ -1,12 +1,10 @@
 package pro.sky.APISwaggerPostman.controller;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.core.ParameterizedTypeReference;
@@ -15,15 +13,12 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import pro.sky.APISwaggerPostman.model.Faculty;
-import pro.sky.APISwaggerPostman.model.Student;
 import pro.sky.APISwaggerPostman.repository.FacultyRepository;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class FacultyControllerRestTemplateTest {
@@ -88,7 +83,7 @@ public class FacultyControllerRestTemplateTest {
         Faculty deleteFaculty = facultyRepository.save(faculty);
 
         ResponseEntity<Faculty> result = testRestTemplate.exchange(
-                baseUrl+"/"+deleteFaculty.getId(),
+                baseUrl + "/" + deleteFaculty.getId(),
                 HttpMethod.DELETE,
                 HttpEntity.EMPTY,
                 Faculty.class
@@ -110,7 +105,8 @@ public class FacultyControllerRestTemplateTest {
                 baseUrl + "/color?color=" + saveFaculty.getColor(),
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<>() {}
+                new ParameterizedTypeReference<>() {
+                }
         );
         assertEquals(HttpStatus.OK, result.getStatusCode());
         assertEquals(faculties, result.getBody());

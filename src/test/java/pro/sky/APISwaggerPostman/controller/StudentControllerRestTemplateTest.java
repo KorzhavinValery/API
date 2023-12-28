@@ -1,7 +1,6 @@
 package pro.sky.APISwaggerPostman.controller;
 
-import org.apache.el.stream.Optional;
-import org.junit.jupiter.api.Assertions;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,7 +92,7 @@ public class StudentControllerRestTemplateTest {
                 Student.class
         );
 
-                assertThat(studentRepository.findById(1L)).isEmpty();
+        assertThat(studentRepository.findById(1L)).isEmpty();
 
     }
 
@@ -161,8 +160,8 @@ public class StudentControllerRestTemplateTest {
     }
 
     @Test
-   public void shouldFindAllStudentsInFacultyById() {
-        Faculty getFaculty =facultyRepository.save(faculty);
+    public void shouldFindAllStudentsInFacultyById() {
+        Faculty getFaculty = facultyRepository.save(faculty);
         Student student1 = new Student(2L, "Newbee", 20);
         Student student2 = new Student(3L, "Newbee1", 17);
         Student student3 = new Student(4L, "Newbee2", 18);
@@ -175,18 +174,19 @@ public class StudentControllerRestTemplateTest {
         Student getStudent2 = studentRepository.save(student2);
         Student getStudent3 = studentRepository.save(student3);
 
-        List<Student> students =List.of(getStudent2, getStudent3);
+        List<Student> students = List.of(getStudent2, getStudent3);
 
 
         ResponseEntity<List<Student>> result = testRestTemplate.exchange(
-                baseUrl+"/facultyId?facultyId=" +getStudent2.getId(),
+                baseUrl + "/facultyId?facultyId=" + getStudent2.getId(),
                 HttpMethod.GET,
                 null,
-                new  ParameterizedTypeReference<>() {}
+                new ParameterizedTypeReference<>() {
+                }
         );
 
-        assertEquals(HttpStatus.OK,result.getStatusCode());
-        assertEquals(students,result.getBody());
+        assertEquals(HttpStatus.OK, result.getStatusCode());
+        assertEquals(students, result.getBody());
     }
 
 }

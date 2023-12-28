@@ -1,8 +1,6 @@
 package pro.sky.APISwaggerPostman.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +19,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -72,18 +69,19 @@ public class StudentControllerWebMvcTest {
     }
 
     @Test
-    public void shouldUpdateStudent() throws  Exception {
+    public void shouldUpdateStudent() throws Exception {
         when(studentRepository.findById(student.getId())).thenReturn(Optional.of(student));
         when(studentRepository.save(student)).thenReturn(student);
 
         mockMvc.perform(put("/student")
-                .content(objectMapper.writeValueAsString(student))
-                .contentType(MediaType.APPLICATION_JSON))
+                        .content(objectMapper.writeValueAsString(student))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(student.getId()))
                 .andExpect(jsonPath("$.name").value(student.getName()))
                 .andExpect(jsonPath("$.age").value(student.getAge()));
     }
+
     @Test
     public void shouldDeleteStudent() throws Exception {
 
@@ -105,6 +103,7 @@ public class StudentControllerWebMvcTest {
                 .andExpect(jsonPath("$.[0].age").value(student.getAge()))
                 .andExpect(jsonPath("$.[1].age").value(studentNew.getAge()));
     }
+
     @Test
     public void shouldFindStudentsBetweenAge() throws Exception {
         Student studentNew = new Student(2L, "Jeremy Clarkson", 35);
@@ -119,6 +118,7 @@ public class StudentControllerWebMvcTest {
                 .andExpect(jsonPath("$.[0]age").value(studentNew.getAge()))
                 .andExpect(jsonPath("$.[1]age").value(studentNew2.getAge()));
     }
+
     @Test
     public void shouldGetFacultyByStudentId() throws Exception {
         student.setFaculty(faculty);
@@ -128,6 +128,7 @@ public class StudentControllerWebMvcTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(student.getId()));
     }
+
     @Test
     void shouldGetStudentsByFacultyId() throws Exception {
         Student student1 = new Student(1L, "Aptyp", 50);
@@ -141,7 +142,7 @@ public class StudentControllerWebMvcTest {
         when(studentRepository.findAllByFaculty_id(faculty.getId()))
                 .thenReturn(students);
 
-        mockMvc.perform(get("/student/facultyId?facultyId="+faculty.getId()))
+        mockMvc.perform(get("/student/facultyId?facultyId=" + faculty.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.[0].id").value(faculty.getId()))
                 .andExpect(jsonPath("$.[1].id").value(faculty.getId()));
