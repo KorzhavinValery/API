@@ -1,5 +1,8 @@
 package pro.sky.APISwaggerPostman.service.impl;
 
+
+import org.springframework.data.domain.PageRequest;
+
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -13,6 +16,7 @@ import pro.sky.APISwaggerPostman.service.StudentService;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Collection;
 
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
@@ -64,5 +68,11 @@ public class AvatarServiceImpl implements AvatarService {
     private String getExtensions(String fileName) {
         return fileName.substring(fileName.lastIndexOf(".") + 1);
 
+    }
+
+    @Override
+    public Collection<Avatar> getAllAvatars(Integer pageNumber, Integer pageSize) {
+        PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize);
+        return avatarRepository.findAll(pageRequest).getContent();
     }
 }
