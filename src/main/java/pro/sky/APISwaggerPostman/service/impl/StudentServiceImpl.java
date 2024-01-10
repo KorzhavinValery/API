@@ -41,6 +41,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void removeStudent(long id) {
+
         studentRepository.deleteById(id);
     }
 

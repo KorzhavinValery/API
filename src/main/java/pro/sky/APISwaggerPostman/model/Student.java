@@ -64,7 +64,7 @@ private Faculty faculty;
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
-        return age == student.age && Objects.equals(id, student.id) && Objects.equals(name, student.name);
+        return id == student.id && age == student.age && Objects.equals(name, student.name);
     }
 
     @Override

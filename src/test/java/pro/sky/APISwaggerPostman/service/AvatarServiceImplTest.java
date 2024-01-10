@@ -1,4 +1,4 @@
-package pro.sky.APISwaggerPostman;
+package pro.sky.APISwaggerPostman.service;
 
 import nonapi.io.github.classgraph.utils.FileUtils;
 import org.junit.jupiter.api.Assertions;
