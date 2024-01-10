@@ -87,8 +87,20 @@ public class StudentController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(faculty);
+    }
+    @GetMapping("/getCountAllStudents")
+    Integer getCountAllStudents() {
+        return service.getCountAllStudents();
+    }
 
+    @GetMapping("/getAverageAgeOfStudents")
+    Double getAverageAgeOfStudents() {
+        return service.getAverageAgeOfStudents();
+    }
 
+    @GetMapping("/getLastFiveStudents")
+    Collection<Student> getLastFiveStudents() {
+        return service.getLastFiveStudents();
     }
 
 }
