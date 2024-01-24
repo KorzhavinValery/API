@@ -103,4 +103,13 @@ public class StudentController {
         return service.getLastFiveStudents();
     }
 
+    @GetMapping ("/studentsNameStartsWithA")
+    Collection<Student> getStudentsNamesStartWithA() {
+        return service.getAllStudentsNameStartsWithA();
+    }
+
+    @GetMapping("/averageAge")
+    Double getAverageAge() {
+        return service.averageAgeOfStudents();
+    }
 }

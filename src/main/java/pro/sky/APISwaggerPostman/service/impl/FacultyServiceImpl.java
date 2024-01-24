@@ -3,15 +3,13 @@ package pro.sky.APISwaggerPostman.service.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import pro.sky.APISwaggerPostman.model.Faculty;
 import pro.sky.APISwaggerPostman.repository.FacultyRepository;
 import pro.sky.APISwaggerPostman.service.FacultyService;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 public class FacultyServiceImpl implements FacultyService {
@@ -65,5 +63,16 @@ public class FacultyServiceImpl implements FacultyService {
     public Collection<Faculty> findByNameContainsIgnoreCase(String name) {
         logger.info("Was invoked method for finding faculty by name {} ",name);
         return facultyRepository.findByNameContainsIgnoreCase(name);
+    }
+
+    @Override
+    public ResponseEntity<String> getFacultyWithMaxLength() {
+        logger.info("Was invoked method for finding faculty name with maximum length");
+
+        Optional<String> facultyNameWithMaxLength =
+                facultyRepository.findAll().stream()
+                        .map(Faculty::getName)
+                        .max(Comparator.comparing(String::length));
+        return ResponseEntity.ok(facultyNameWithMaxLength.get());
     }
 }

@@ -11,7 +11,8 @@ import pro.sky.APISwaggerPostman.repository.StudentRepository;
 import pro.sky.APISwaggerPostman.service.StudentService;
 
 import java.util.Collection;
-
+import java.util.Comparator;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -96,4 +97,21 @@ Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
         logger.info("Was invoked method for getting only last five students");
         return studentRepository.getLastFiveStudents();
     }
+
+    @Override
+    public Collection<Student> getAllStudentsNameStartsWithA() {
+        logger.info("Was invoked method for getting all students whose name starts with A");
+        return studentRepository.findAll().stream()
+                .sorted(Comparator.comparing(Student::getName)).
+                filter(student -> student.getName().startsWith("A"))
+                .collect(Collectors.toUnmodifiableList());
+    }
+
+    @Override
+    public Double averageAgeOfStudents() {
+        logger.info("Was invoked method for getting the average age of students");
+        return studentRepository.findAll().stream()
+                .mapToDouble(Student::getAge).average().getAsDouble();
+    }
+
 }
