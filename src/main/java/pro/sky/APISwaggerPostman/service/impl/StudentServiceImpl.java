@@ -17,9 +17,10 @@ import java.util.stream.Collectors;
 
 @Service
 public class StudentServiceImpl implements StudentService {
-Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
+    Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
     @Autowired
     private final StudentRepository studentRepository;
+
 
     public StudentServiceImpl(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
@@ -41,7 +42,7 @@ Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
 
     @Override
     public Student editStudent(Student student) {
-        logger.info("Was invoked method for update student by id {}",student.getId());
+        logger.info("Was invoked method for update student by id {}", student.getId());
         return studentRepository.save(student);
     }
 
@@ -65,7 +66,7 @@ Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
 
     @Override
     public Collection<Student> findByAgeBetween(int min, int max) {
-        logger.info("Was invoked method for searching student between min {} and max {}", min, max );
+        logger.info("Was invoked method for searching student between min {} and max {}", min, max);
         return studentRepository.findByAgeBetween(min, max);
     }
 
@@ -77,9 +78,10 @@ Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
 
     @Override
     public Faculty getFacultyByStudentId(long studentId) {
-        logger.info("Was invoked method for getting faculty by student id {}",studentId);
+        logger.info("Was invoked method for getting faculty by student id {}", studentId);
         return getStudent(studentId).getFaculty();
     }
+
     @Override
     public Integer getCountAllStudents() {
         logger.info("Was invoked method for counting all students");
@@ -112,6 +114,50 @@ Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
         logger.info("Was invoked method for getting the average age of students");
         return studentRepository.findAll().stream()
                 .mapToDouble(Student::getAge).average().getAsDouble();
+    }
+
+    @Override
+    public void getStudentNamesParallel() {
+        printNames(1);
+        printNames(2);
+
+        new Thread(() -> {
+            printNames(3);
+            printNames(4);
+        }).start();
+
+        new Thread(() -> {
+            printNames(5);
+            printNames(6);
+        }).start();
+
+    }
+
+    private void printNames(long id) {
+        String studentName = getStudent(id).getName();
+        System.out.println(studentName + " id= " + id);
+    }
+
+    @Override
+    public void getStudentNamesSync() {
+        printNamesSync(1);
+        printNamesSync(2);
+
+        new Thread(() -> {
+            printNamesSync(3);
+            printNamesSync(4);
+        }).start();
+
+        new Thread(() -> {
+            printNamesSync(5);
+            printNamesSync(6);
+        }).start();
+
+    }
+
+    private synchronized void printNamesSync(long id) {
+        String studentName = getStudent(id).getName();
+        System.out.println(studentName + " id= " + id);
     }
 
 }

@@ -88,6 +88,7 @@ public class StudentController {
         }
         return ResponseEntity.ok(faculty);
     }
+
     @GetMapping("/getCountAllStudents")
     Integer getCountAllStudents() {
         return service.getCountAllStudents();
@@ -103,7 +104,7 @@ public class StudentController {
         return service.getLastFiveStudents();
     }
 
-    @GetMapping ("/studentsNameStartsWithA")
+    @GetMapping("/studentsNameStartsWithA")
     Collection<Student> getStudentsNamesStartWithA() {
         return service.getAllStudentsNameStartsWithA();
     }
@@ -112,4 +113,15 @@ public class StudentController {
     Double getAverageAge() {
         return service.averageAgeOfStudents();
     }
+
+    @GetMapping("/print-parallel")
+    public void getNames() {
+        service.getStudentNamesParallel();
+    }
+
+    @GetMapping("/print-synchronized")
+    public void getNamesSync() throws InterruptedException {
+        service.getStudentNamesSync();
+    }
+
 }
