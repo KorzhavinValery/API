@@ -1,6 +1,8 @@
 package pro.sky.APISwaggerPostman.service.impl;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
 
 import jakarta.transaction.Transactional;
@@ -24,6 +26,7 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 @Service
 @Transactional
 public class AvatarServiceImpl implements AvatarService {
+    Logger logger = LoggerFactory.getLogger(AvatarServiceImpl.class);
     @Value("${path.to.avatars.folder}")
     private final String avatarsDir;
     private final StudentService studentService;
@@ -37,6 +40,7 @@ public class AvatarServiceImpl implements AvatarService {
 
     @Override
     public void uploadAvatar(Long studentId, MultipartFile avatarFile) throws IOException {
+        logger.info("Was invoked method for saving avatar to filePath");
         Student student = studentService.getStudent(studentId);
         Path filePath = Path.of(avatarsDir,
                 studentId + "." + getExtensions((avatarFile.getOriginalFilename())));
@@ -50,6 +54,7 @@ public class AvatarServiceImpl implements AvatarService {
         ) {
             bis.transferTo(bos);
         }
+        logger.info("Was invoked method for saving avatar to DataBase");
         Avatar avatar = findAvatar(studentId);
         avatar.setStudent(student);
         avatar.setFilePath(filePath.toString());
@@ -62,6 +67,7 @@ public class AvatarServiceImpl implements AvatarService {
 
     @Override
     public Avatar findAvatar(Long studentId) {
+        logger.info("Was invoked method for reading avatar ");
         return avatarRepository.findByStudent_Id(studentId).orElse(new Avatar());
     }
 
@@ -72,6 +78,7 @@ public class AvatarServiceImpl implements AvatarService {
 
     @Override
     public Collection<Avatar> getAllAvatars(Integer pageNumber, Integer pageSize) {
+        logger.info("Was invoked method for getting Collection of all avatars ");
         PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize);
         return avatarRepository.findAll(pageRequest).getContent();
     }
