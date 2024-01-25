@@ -1,5 +1,6 @@
 package pro.sky.APISwaggerPostman.service;
 
+import org.springframework.http.ResponseEntity;
 import pro.sky.APISwaggerPostman.model.Faculty;
 
 import java.util.Collection;
@@ -14,6 +15,8 @@ public interface FacultyService {
     Collection<Faculty> getAllFaculties();
     Collection<Faculty> findAllByColor(String color);
     Collection<Faculty> findByNameContainsIgnoreCase(String name);
+
+    ResponseEntity<String> getFacultyWithMaxLength();
 
 
 }

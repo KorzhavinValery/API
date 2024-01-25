@@ -62,4 +62,9 @@ public class FacultyController {
         }
         return ResponseEntity.ok(Collections.emptyList());
     }
+
+    @GetMapping("nameFacultyWithMaxLength")
+    public ResponseEntity<String> getFacultyNameWithMaxLength() {
+        return service.getFacultyWithMaxLength();
+    }
 }
