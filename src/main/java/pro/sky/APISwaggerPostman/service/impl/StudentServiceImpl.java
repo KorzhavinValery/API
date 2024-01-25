@@ -140,8 +140,24 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void getStudentNamesSync() {
+        printNamesSync(1);
+        printNamesSync(2);
+
+        new Thread(() -> {
+            printNamesSync(3);
+            printNamesSync(4);
+        }).start();
+
+        new Thread(() -> {
+            printNamesSync(5);
+            printNamesSync(6);
+        }).start();
 
     }
 
+    private synchronized void printNamesSync(long id) {
+        String studentName = getStudent(id).getName();
+        System.out.println(studentName + " id= " + id);
+    }
 
 }
